@@ -56,7 +56,7 @@ for i in letrasProposicionales:
             else:
                 aux1[b]=j[b]
         interps.append(aux1)
-print ("Interpretaciones:")
+
 
 
 #implementar la funcion vi
