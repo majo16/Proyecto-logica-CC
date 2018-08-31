@@ -25,6 +25,14 @@ D9=Tree("-",None,D8)#(-(-po-q))
 D10=Tree(">",A,B)#p->q
 D11=Tree("O",A1,B)#-poq
 
+#formulas 10 porciento
+D12=Tree("-",None,D10)#-(p>q)
+D13=Tree("r",None,None)#r
+D14=Tree("s",None,None)#s
+D15=Tree("O",D13,D14)#ros
+D15=Tree(">",D12,D15)#-(p>q)>(ros)
+
+
 
 
 
@@ -35,7 +43,7 @@ D11=Tree("O",A1,B)#-poq
 I={'p':0,'q':1,'r':1,'s':0}
 #luego I['P']=0
 
-letrasProposicionales=['p','q','r']
+letrasProposicionales=['p','q','r','s']
 interps=[]#lista de todas las posibles interpretaciones
 aux={}#primer interpretacion
 
@@ -62,33 +70,33 @@ for i in letrasProposicionales:
 #implementar la funcion vi
     
 def VI(arb,I):
-	if arb.right==None:
-    		return I[arb.label]
-	elif arb.label=='-':
-    		if VI(arb.right,I)==1:
-        		return 0
-    		else:
-        		return 1
-	elif arb.label=='Y':
-    		if(VI(arb.left,I)==1 and VI(arb.right,I)==1):
-        		return 1
-    		else:
-        		return 0
-	elif arb.label=='O':
-    		if(VI(arb.left,I)==1 or VI(arb.right,I)==1):
-       			return 1
-    		else:
-       			return 0
-	elif arb.label=='>':
-       		if(VI(arb.left,I)==0):
-           		return 1
-       		else:
-           		return VI(arb.right,I)
-	elif arb.label=='<>':
-       		if(VI(arb.left,I)==VI(arb.right,I)):
-          		return 1
-       		else:
-          		return 0
+  if arb.right==None:
+        return I[arb.label]
+  elif arb.label=='-':
+        if (VI(arb.right,I)==1):
+            return 0
+        else:
+            return 1
+  elif arb.label=='Y':
+        if(VI(arb.left,I)==1 and VI(arb.right,I)==1):
+            return 1
+        else:
+            return 0
+  elif arb.label=='O':
+        if(VI(arb.left,I)==1 or VI(arb.right,I)==1):
+            return 1
+        else:
+            return 0
+  elif arb.label=='>':
+          if(VI(arb.left,I)==0):
+              return 1
+          else:
+              return VI(arb.right,I)
+  elif arb.label=='<>':
+          if(VI(arb.left,I)==VI(arb.right,I)):
+              return 1
+          else:
+              return 0
 
 
 def Equivalencia(arb,arb2):
@@ -97,7 +105,7 @@ def Equivalencia(arb,arb2):
         k=VI(arb2,i)
         if j!=k:
             return False
-    return True		
+    return True   
 
 
 #probamos la primera formula 
@@ -117,8 +125,13 @@ print(Equivalencia(D2,D9),"este es el 5c")
 #d
 print(Equivalencia(D10,D11),"este es el 5d")
 
-
-  
+#10 portciento
+def ValoresVerdad(arb):
+  for i in interps:
+    if(VI(arb,I))==1:
+      return i
     
 
+
+print(ValoresVerdad(D15),"esta es la formula -(p>q)>(ros) y es verdadera con estos valores")
                
